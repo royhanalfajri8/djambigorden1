@@ -197,13 +197,19 @@
     <section id="galeri" class="section gallery">
         <div class="container text-center">
             <h2 class="section-title fade-in">Galeri Pekerjaan</h2>
-
+            <div class="gallery-filter-bar fade-in">
+                <button class="gallery-filter active" data-filter="all">Semua</button>
+                <button class="gallery-filter" data-filter="minimalis">Gorden Minimalis</button>
+                <button class="gallery-filter" data-filter="klasik">Gorden Klasik</button>
+                <button class="gallery-filter" data-filter="interior">Interior</button>
+                <button class="gallery-filter" data-filter="jasa">Jasa</button>
+            </div>
             <!-- Gallery Slider -->
             <div class="gallery-slider fade-in">
                 <div class="slider-container">
                     <div class="slider-track">
                         <!-- Gallery Image 1 (Gorden 1) -->
-                        <div class="gallery-slide">
+                        <div class="gallery-slide" data-category="klasik">
                             <img src="assets/gorden-real.jpg" alt="Gorden">
                         </div>
                         <!-- Gallery Image 2 (Gorden 2) -->
@@ -327,59 +333,42 @@
                     <div class="slider-dots"></div>
                 </div>
             </div>
-            <button id="view-all-gallery" class="btn" style="margin-top: 30px;">Tampilkan Semua Gambar</button>
 
             <div class="gallery-grid">
-                <div class="gallery-item fade-in"><img src="assets/gorden-real.jpg" alt="Gorden"></div>
-                <div class="gallery-item fade-in"><img src="assets/gorden 11.jpeg" alt="Gorden"></div>
-                <div class="gallery-item fade-in"><img src="assets/wallpaper-real.jpg" alt="Wallpaper"></div>
-                <div class="gallery-item fade-in"><img src="assets/wallpapper 2.jpeg" alt="Wallpaper"></div>
-                <div class="gallery-item fade-in"><img src="assets/roller-blind-real.jpg" alt="Roller blinds"></div>
-                <div class="gallery-item fade-in"><img src="assets/venetian-blind-real.jpg" alt="Venetian blinds"></div>
-                <div class="gallery-item fade-in"><img src="assets/vertical-blind-real.jpg" alt="Vertical blinds"></div>
-                <div class="gallery-item fade-in"><img src="assets/vertical 1.jpeg" alt="Vertical blinds"></div>
-                <div class="gallery-item fade-in"><img src="assets/vertical2.jpeg" alt="Vertical blinds"></div>
-                <div class="gallery-item fade-in"><img src="assets/gorden 2.jpeg" alt="Gorden"></div>
-                <div class="gallery-item fade-in"><img src="assets/gorden 3.jpeg" alt="Gorden"></div>
-                <div class="gallery-item fade-in"><img src="assets/gorden 4.jpeg" alt="Gorden"></div>
-                                        <div class="gallery-slide">
-                            <img src="assets/gorden111.jpeg" alt="Gorden">
-                        </div>
-                        <div class="gallery-slide">
-                            <img src="assets/gorden112.jpeg" alt="Gorden">
-                        </div>
-                        <div class="gallery-slide">
-                            <img src="assets/gorden113.jpeg" alt="Gorden">
-                        </div>
-                        <div class="gallery-slide">
-                            <img src="assets/gorden114.jpeg" alt="Gorden">
-                        </div>
-                        <div class="gallery-slide">
-                            <img src="assets/gorden115.jpeg" alt="Gorden">
-                        </div>
-                        <div class="gallery-slide">
-                            <img src="assets/gorden116.jpeg" alt="Gorden">
-                        </div>
-                        <div class="gallery-slide">
-                            <img src="assets/gorden117.jpeg" alt="Gorden">
-                        </div>
-                        <div class="gallery-slide">
-                            <img src="assets/gorden118.jpeg" alt="Gorden">
-                        </div>
-                        <div class="gallery-slide">
-                            <img src="assets/gorden119.jpeg" alt="Gorden">
-                        </div>
-                        <div class="gallery-slide">
-                            <img src="assets/gorden120.jpeg" alt="Gorden">
-                        </div>
-                <div class="gallery-item fade-in"><img src="assets/gorden 5.jpeg" alt="Gorden"></div>
-                <div class="gallery-item fade-in"><img src="assets/gorden 7.jpeg" alt="Gorden"></div>
-                <div class="gallery-item fade-in"><img src="assets/gorden 8.jpeg" alt="Gorden"></div>
-                <div class="gallery-item fade-in"><img src="assets/gorden 6.jpeg" alt="Gorden"></div>
-                <div class="gallery-item fade-in"><img src="assets/gorden 9.jpeg" alt="Gorden"></div>
-                <div class="gallery-item fade-in"><img src="assets/backdrop.jpeg" alt="Backdrop TV"></div>
-                <div class="gallery-item fade-in"><img src="assets/steam.jpeg" alt="Jasa Uap"></div>
-                <div class="gallery-item fade-in"><img src="assets/jasa uap1.jpeg" alt="Jasa Uap"></div>
+                <!-- Grid tampilan gambar muncul setelah klik tombol -->
+                <div class="gallery-item fade-in" data-category="klasik"><img src="assets/gorden-real.jpg" alt="Gorden"></div>
+                <div class="gallery-item fade-in" data-category="klasik"><img src="assets/gorden 11.jpeg" alt="Gorden"></div>
+                <div class="gallery-item fade-in" data-category="interior"><img src="assets/wallpaper-real.jpg" alt="Wallpaper"></div>
+                <div class="gallery-item fade-in" data-category="interior"><img src="assets/wallpapper 2.jpeg" alt="Wallpaper"></div>
+                <div class="gallery-item fade-in" data-category="interior"><img src="assets/roller-blind-real.jpg" alt="Roller blinds"></div>
+                <div class="gallery-item fade-in" data-category="interior"><img src="assets/venetian-blind-real.jpg" alt="Venetian blinds"></div>
+                <div class="gallery-item fade-in" data-category="interior"><img src="assets/vertical-blind-real.jpg" alt="Vertical blinds"></div>
+                <div class="gallery-item fade-in" data-category="interior"><img src="assets/vertical 1.jpeg" alt="Vertical blinds"></div>
+                <div class="gallery-item fade-in" data-category="interior"><img src="assets/vertical2.jpeg" alt="Vertical blinds"></div>
+                <div class="gallery-item fade-in" data-category="minimalis"><img src="assets/gorden 2.jpeg" alt="Gorden"></div>
+                <div class="gallery-item fade-in" data-category="minimalis"><img src="assets/gorden 3.jpeg" alt="Gorden"></div>
+                <div class="gallery-item fade-in" data-category="klasik"><img src="assets/gorden 4.jpeg" alt="Gorden"></div>
+                <div class="gallery-item fade-in" data-category="klasik"><img src="assets/gorden111.jpeg" alt="Gorden"></div>
+                <div class="gallery-item fade-in" data-category="minimalis"><img src="assets/gorden112.jpeg" alt="Gorden"></div>
+                <div class="gallery-item fade-in" data-category="klasik"><img src="assets/gorden113.jpeg" alt="Gorden"></div>
+                <div class="gallery-item fade-in" data-category="klasik"><img src="assets/gorden114.jpeg" alt="Gorden"></div>
+                <div class="gallery-item fade-in" data-category="klasik"><img src="assets/gorden115.jpeg" alt="Gorden"></div>
+                <div class="gallery-item fade-in" data-category="klasik"><img src="assets/gorden116.jpeg" alt="Gorden"></div>
+                <div class="gallery-item fade-in" data-category="klasik"><img src="assets/gorden117.jpeg" alt="Gorden"></div>
+                <div class="gallery-item fade-in" data-category="klasik"><img src="assets/gorden118.jpeg" alt="Gorden"></div>
+                <div class="gallery-item fade-in" data-category="klasik"><img src="assets/gorden119.jpeg" alt="Gorden"></div>
+                <div class="gallery-item fade-in" data-category="klasik"><img src="assets/gorden120.jpeg" alt="Gorden"></div>
+                <div class="gallery-item fade-in" data-category="klasik"><img src="assets/gorden 5.jpeg" alt="Gorden"></div>
+                <div class="gallery-item fade-in" data-category="klasik"><img src="assets/gorden 7.jpeg" alt="Gorden"></div>
+                <div class="gallery-item fade-in" data-category="klasik"><img src="assets/gorden 8.jpeg" alt="Gorden"></div>
+                <div class="gallery-item fade-in" data-category="klasik"><img src="assets/gorden 6.jpeg" alt="Gorden"></div>
+                <div class="gallery-item fade-in" data-category="minimalis"><img src="assets/gorden 9.jpeg" alt="Gorden"></div>
+                <div class="gallery-item fade-in" data-category="interior"><img src="assets/backdrop.jpeg" alt="Backdrop TV"></div>
+                <div class="gallery-item fade-in" data-category="jasa"><img src="assets/steam.jpeg" alt="Jasa Uap"></div>
+                <div class="gallery-item fade-in" data-category="jasa"><img src="assets/jasa uap1.jpeg" alt="Jasa Uap"></div>
+            </div>
+            <div class="text-center" style="margin-top: 20px;">
+                <button id="view-all-gallery" class="btn">Tampilkan Semua Gambar</button>
             </div>
         </div>
     </section>
@@ -414,11 +403,10 @@
             </div>
 
             <!-- Google Maps Embed -->
-            <div class="map-container fade-in" style="margin-top: 50px;">
+            <div class="map-container fade-in">
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!4v1769262643138!6m8!1m7!1sSES8ixTCIHLqS8cYsrwP2A!2m2!1d-1.615074091298766!2d103.6442251470208!3f98.21734435051546!4f1.888807069219439!5f0.4000000000000002"
-                    width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </section>

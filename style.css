@@ -127,7 +127,7 @@ img {
 .header {
     background-color: var(--background-color);
     /* Was #fff */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -332,13 +332,17 @@ img {
     position: relative;
     max-width: 1000px;
     margin: 0 auto;
+    border: 1px solid rgba(34, 34, 34, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.15);
+    background: #fff;
 }
 
 .slider-container {
     position: relative;
     overflow: hidden;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
 
 .slider-track {
@@ -366,23 +370,75 @@ img {
 
 /* Gallery Grid for "Show All" */
 .gallery-grid {
-    display: none; /* Hidden by default */
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 28px;
     margin-top: 30px;
 }
 
-.gallery-grid.show-all {
-    display: grid;
+.gallery-grid.hide {
+    display: none;
+}
+
+.gallery-slider.hidden {
+    display: none;
+}
+
+.gallery-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.gallery-filter {
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    transition: all 0.2s ease;
+}
+
+.gallery-filter.active,
+.gallery-filter:hover {
+    background: var(--primary-color);
+    color: var(--light-text);
+    border-color: transparent;
 }
 
 .gallery-item {
     border-radius: 10px;
     overflow: hidden;
     position: relative;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    border: 3px solid var(--secondary-color);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.22);
+    border: 1px solid rgba(34, 34, 34, 0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: #fff;
+}
+
+.gallery-item.show-hidden {
+    display: none;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
     transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
 }
 
 .gallery-item:hover {
@@ -394,6 +450,8 @@ img {
     aspect-ratio: 4 / 5;
     object-fit: cover;
     transition: transform 0.5s;
+    border: 2px solid rgba(255, 193, 7, 0.8);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
 .gallery-item:hover img {
@@ -463,12 +521,44 @@ img {
 
 /* Contact & Footer */
 .contact {
-    background-color: var(--primary-color);
+    background: linear-gradient(135deg, #1f5f3a, #2e7d52);
     color: var(--light-text);
+    padding: 100px 0;
 }
 
 .contact .section-title {
     color: var(--light-text);
+}
+
+.contact .contact-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.map-container {
+    margin: 60px 0;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.map-container iframe {
+    border-radius: 20px;
+    border: 0;
+    width: 100%;
+    height: 400px;
+}
+
+.testimonials .advantage-card {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonials .advantage-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 14px 25px rgba(0,0,0,0.15);
 }
 
 .whatsapp-btn {
@@ -515,6 +605,27 @@ img {
     margin-top: 30px;
     margin-left: 15px;
     /* Spacing */
+}
+
+.tiktok-btn:hover {
+    opacity: 0.9;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+.shopee-btn {
+    background: linear-gradient(135deg, #ff9500, #ff3d00);
+    color: #fff;
+    font-size: 1.2rem;
+    margin-top: 30px;
+    margin-left: 15px;
+    border: 0;
+    box-shadow: 0 5px 15px rgba(255, 77, 0, 0.35);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.shopee-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 77, 0, 0.5);
 }
 
 .tiktok-btn:hover {
