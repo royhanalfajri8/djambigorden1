@@ -126,9 +126,71 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Event listeners
+        // Event listeners for buttons
         nextBtn.addEventListener('click', nextSlide);
         prevBtn.addEventListener('click', prevSlide);
+
+        // Swipe/Drag Gesture Support
+        const sliderContainer = document.querySelector('.slider-container');
+        let isPressed = false;
+        let startX = 0;
+
+        // Mouse events
+        sliderContainer.addEventListener('mousedown', (e) => {
+            isPressed = true;
+            startX = e.clientX;
+            sliderContainer.style.cursor = 'grabbing';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isPressed) return;
+            sliderContainer.style.cursor = 'grabbing';
+        });
+
+        document.addEventListener('mouseup', (e) => {
+            if (!isPressed) return;
+            isPressed = false;
+            sliderContainer.style.cursor = 'grab';
+            
+            const endX = e.clientX;
+            const diff = startX - endX;
+            
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+        });
+
+        // Touch events
+        sliderContainer.addEventListener('touchstart', (e) => {
+            isPressed = true;
+            startX = e.touches[0].clientX;
+        }, false);
+
+        document.addEventListener('touchmove', (e) => {
+            if (isPressed) {
+                // Prevent default scroll while dragging
+            }
+        }, false);
+
+        sliderContainer.addEventListener('touchend', (e) => {
+            if (!isPressed) return;
+            isPressed = false;
+            
+            const endX = e.changedTouches[0].clientX;
+            const diff = startX - endX;
+            
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+        }, false);
 
         // Initialize
         updateSlider();
