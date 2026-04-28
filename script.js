@@ -42,15 +42,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const captionText = document.getElementById("caption");
     const closeBtn = document.querySelector(".close-modal");
 
-    // Get all images that should be clickable
-    const images = document.querySelectorAll('.gallery-slide img, .product-img img');
+    function openLightbox(img) {
+        modal.style.display = "flex";
+        modalImg.src = img.src;
+        captionText.innerHTML = img.alt || '';
+    }
 
-    images.forEach(img => {
-        img.addEventListener('click', function () {
-            modal.style.display = "block";
-            modalImg.src = this.src;
-            captionText.innerHTML = this.alt;
-        });
+    document.addEventListener('click', (event) => {
+        if (event.target.tagName === 'IMG') {
+            const parent = event.target.closest('.gallery-slide, .gallery-item, .product-img');
+            if (parent) {
+                openLightbox(event.target);
+            }
+        }
     });
 
     // Close Modal when clicking (x)
