@@ -228,7 +228,17 @@ img {
     display: flex;
     align-items: center;
     gap: 50px;
-    margin-bottom: 80px;
+    margin-bottom: 100px;
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
 .product-item.reverse {
@@ -277,7 +287,7 @@ img {
 
 .product-info h3 {
     font-size: 2rem;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     color: var(--primary-color);
     text-align: center;
     /* Center only the title */
@@ -289,6 +299,8 @@ img {
     opacity: 0.8;
     text-align: justify;
     /* Justify or left align text */
+    line-height: 1.7;
+    margin-bottom: 15px;
 }
 
 /* Advantages Section */
@@ -572,14 +584,18 @@ img {
 
 .whatsapp-btn {
     background-color: #25D366;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+    padding: 15px 40px;
     margin-top: 30px;
     margin-right: 15px;
-    /* Spacing between buttons */
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
 }
 
 .whatsapp-btn:hover {
     background-color: #128C7E;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
 }
 
 .phone-btn {
@@ -661,6 +677,14 @@ img {
 
 /* Responsive */
 @media (max-width: 768px) {
+    .nav-container {
+        padding: 10px 15px;
+    }
+
+    .logo-img {
+        height: 50px;
+    }
+
     .nav-links {
         display: none;
         flex-direction: column;
@@ -668,18 +692,72 @@ img {
         top: 100%;
         left: 0;
         width: 100%;
-        background-color: #fff;
+        background-color: rgba(250, 249, 246, 0.95);
+        backdrop-filter: blur(10px);
         padding: 20px;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         text-align: center;
+        transform: translateY(-10px);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
     }
 
     .nav-links.active {
         display: flex;
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
     }
 
     .menu-toggle {
         display: block;
+        position: relative;
+        width: 30px;
+        height: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .menu-toggle::before,
+    .menu-toggle::after,
+    .menu-toggle span {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 3px;
+        background-color: var(--primary-color);
+        transition: all 0.3s ease;
+        border-radius: 2px;
+    }
+
+    .menu-toggle::before {
+        top: 0;
+    }
+
+    .menu-toggle span {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .menu-toggle::after {
+        bottom: 0;
+    }
+
+    .menu-toggle.active::before {
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+    }
+
+    .menu-toggle.active span {
+        opacity: 0;
+    }
+
+    .menu-toggle.active::after {
+        bottom: 50%;
+        transform: translateY(50%) rotate(-45deg);
     }
 
     .hero h1 {

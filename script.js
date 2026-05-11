@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (menuToggle) {
         menuToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
         });
     }
 
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         anchor.addEventListener('click', function (e) {
             // Let CSS handle smooth scroll and offset
             navMenu.classList.remove('active'); // Close menu on click
+            menuToggle.classList.remove('active'); // Close hamburger animation
         });
     });
 
