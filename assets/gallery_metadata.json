@@ -1,1 +1,54 @@
-{}
+{
+  "name": {
+    "category": "",
+    "alt": "name"
+  },
+  "path": {
+    "category": "",
+    "alt": "path"
+  },
+  "sha": {
+    "category": "",
+    "alt": "sha"
+  },
+  "size": {
+    "category": "",
+    "alt": "size"
+  },
+  "url": {
+    "category": "",
+    "alt": "url"
+  },
+  "html_url": {
+    "category": "",
+    "alt": "html_url"
+  },
+  "git_url": {
+    "category": "",
+    "alt": "git_url"
+  },
+  "download_url": {
+    "category": "",
+    "alt": "download_url"
+  },
+  "type": {
+    "category": "",
+    "alt": "type"
+  },
+  "content": {
+    "category": "",
+    "alt": "content"
+  },
+  "encoding": {
+    "category": "",
+    "alt": "encoding"
+  },
+  "_links": {
+    "category": "",
+    "alt": "_links"
+  },
+  "wallpaper-20260604-013.png": {
+    "category": "wallpaper",
+    "alt": "wallpaper"
+  }
+}
