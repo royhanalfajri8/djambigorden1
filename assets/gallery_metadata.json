@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿{
     "1778782042_18cc7325_whatsapp_image_2025-05-27_at_15_39_30_eeb8b5a4.jpg":  {
                                                                                    "category":  "minimalis",
@@ -8,3 +9,67 @@
                                       "alt":  "Foto Galeri"
                                   }
 }
+=======
+{
+  "name": {
+    "category": "",
+    "alt": "name"
+  },
+  "path": {
+    "category": "",
+    "alt": "path"
+  },
+  "sha": {
+    "category": "",
+    "alt": "sha"
+  },
+  "size": {
+    "category": "",
+    "alt": "size"
+  },
+  "url": {
+    "category": "",
+    "alt": "url"
+  },
+  "html_url": {
+    "category": "",
+    "alt": "html_url"
+  },
+  "git_url": {
+    "category": "",
+    "alt": "git_url"
+  },
+  "download_url": {
+    "category": "",
+    "alt": "download_url"
+  },
+  "type": {
+    "category": "",
+    "alt": "type"
+  },
+  "content": {
+    "category": "",
+    "alt": "content"
+  },
+  "encoding": {
+    "category": "",
+    "alt": "encoding"
+  },
+  "_links": {
+    "category": "",
+    "alt": "_links"
+  },
+  "wallpaper-20260604-013.png": {
+    "category": "wallpaper",
+    "alt": "wallpaper"
+  },
+  "wallpaper-20260604-014.png": {
+    "category": "wallpaper",
+    "alt": "wallpaper"
+  },
+  "wallpapper-20260604-015.png": {
+    "category": "wallpaper",
+    "alt": "wallpapper"
+  }
+}
+>>>>>>> 4ad0c70c67b5f2285b7397c50cae04fa6afbae0a
