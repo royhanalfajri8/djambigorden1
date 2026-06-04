@@ -77,45 +77,88 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Gallery Slider ---
     const sliderTrack = document.querySelector('.slider-track');
-    const gallerySlides = document.querySelectorAll('.gallery-slide');
     const prevBtn = document.querySelector('.slider-nav.prev');
     const nextBtn = document.querySelector('.slider-nav.next');
     const dotsContainer = document.querySelector('.slider-dots');
 
-    if (sliderTrack && gallerySlides.length > 0) {
+    if (sliderTrack) {
         let currentIndex = 0;
+        let slides = Array.from(sliderTrack.querySelectorAll('.gallery-slide'));
+        let dots = [];
 
-        // Create dots
-        gallerySlides.forEach((_, index) => {
-            const dot = document.createElement('div');
-            dot.classList.add('slider-dot');
-            if (index === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => goToSlide(index));
-            dotsContainer.appendChild(dot);
-        });
-
-        const dots = document.querySelectorAll('.slider-dot');
+        function initDots() {
+            dotsContainer.innerHTML = '';
+            dots = [];
+            slides.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('slider-dot');
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(index));
+                dotsContainer.appendChild(dot);
+                dots.push(dot);
+            });
+        }
 
         function updateSlider() {
             sliderTrack.style.transform = `translateX(-${currentIndex * 100}%)`;
 
-            // Update dots
             dots.forEach((dot, index) => {
                 dot.classList.toggle('active', index === currentIndex);
             });
 
-            // Update buttons
-            prevBtn.disabled = currentIndex === 0;
-            nextBtn.disabled = currentIndex === gallerySlides.length - 1;
+            if (prevBtn) prevBtn.disabled = currentIndex === 0;
+            if (nextBtn) nextBtn.disabled = currentIndex === slides.length - 1;
+        }
+
+        // --- Dynamic gallery loader from assets/gallery_metadata.json ---
+        async function loadGalleryFromMetadata() {
+            try {
+                const resp = await fetch('assets/gallery_metadata.json', { cache: 'no-store' });
+                if (!resp.ok) return; // keep static markup as fallback
+                const data = await resp.json();
+                let items = [];
+                if (Array.isArray(data)) {
+                    items = data; // expect {img, title, tag}
+                } else if (data && typeof data === 'object') {
+                    items = Object.keys(data).map(key => {
+                        const v = data[key] || {};
+                        const imgPath = key.includes('/') ? key : `assets/gallery/${key}`;
+                        const img = encodeURI(imgPath);
+                        return { img, title: v.alt || key, tag: v.category || '' };
+                    });
+                }
+
+                if (items.length === 0) return;
+
+                // Clear existing slides
+                sliderTrack.innerHTML = '';
+                items.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'gallery-slide';
+                    if (item.tag) div.setAttribute('data-category', item.tag);
+                    const img = document.createElement('img');
+                    img.src = item.img;
+                    img.alt = item.title || '';
+                    div.appendChild(img);
+                    sliderTrack.appendChild(div);
+                });
+
+                slides = Array.from(sliderTrack.querySelectorAll('.gallery-slide'));
+                currentIndex = 0;
+                initDots();
+                updateSlider();
+            } catch (err) {
+                console.warn('Failed to load gallery metadata', err);
+            }
         }
 
         function goToSlide(index) {
-            currentIndex = index;
+            currentIndex = Math.min(Math.max(index, 0), slides.length - 1);
             updateSlider();
         }
 
         function nextSlide() {
-            if (currentIndex < gallerySlides.length - 1) {
+            if (currentIndex < slides.length - 1) {
                 currentIndex++;
                 updateSlider();
             }
@@ -127,6 +170,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateSlider();
             }
         }
+
+        if (slides.length > 0) {
+            initDots();
+            updateSlider();
+        }
+
+        // load gallery metadata if available
+        loadGalleryFromMetadata();
 
         // Event listeners for buttons
         nextBtn.addEventListener('click', nextSlide);

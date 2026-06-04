@@ -1,10 +1,10 @@
-{
-    "1778780617_6e86cc72__.jpg": {
-        "category": "klasik",
-        "alt": "Foto Galeri"
-    },
-    "1778782042_18cc7325_whatsapp_image_2025-05-27_at_15_39_30_eeb8b5a4.jpg": {
-        "category": "minimalis",
-        "alt": "Foto Galeri"
-    }
+﻿{
+    "1778782042_18cc7325_whatsapp_image_2025-05-27_at_15_39_30_eeb8b5a4.jpg":  {
+                                                                                   "category":  "minimalis",
+                                                                                   "alt":  "Foto Galeri"
+                                                                               },
+    "1778780617_6e86cc72__.jpg":  {
+                                      "category":  "minimalis",
+                                      "alt":  "Foto Galeri"
+                                  }
 }
