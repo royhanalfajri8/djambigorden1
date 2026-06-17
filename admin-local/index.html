@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Gallery - Local Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>📸 Admin Gallery</h1>
+            <div class="header-actions">
+                <button id="syncBtn" class="btn btn-secondary" title="Sinkronisasi dengan GitHub">
+                    🔄 Sync
+                </button>
+                <button id="settingsBtn" class="btn btn-secondary" title="Pengaturan">
+                    ⚙️ Pengaturan
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Settings Modal -->
+        <div id="settingsModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Pengaturan Koneksi GitHub</h2>
+                    <button class="modal-close" id="closeSettings">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="token">Personal Access Token:</label>
+                        <input 
+                            type="password" 
+                            id="token" 
+                            placeholder="ghp_xxxxxxxxxxxx"
+                            class="input-field"
+                        >
+                        <small>
+                            <a href="https://github.com/settings/tokens" target="_blank">Generate token di GitHub</a>
+                            - Butuh permission: repo, workflow
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label for="owner">Username GitHub:</label>
+                        <input 
+                            type="text" 
+                            id="owner" 
+                            placeholder="username"
+                            class="input-field"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="repo">Nama Repository:</label>
+                        <input 
+                            type="text" 
+                            id="repo" 
+                            placeholder="repository-name"
+                            class="input-field"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="galleryPath">Path file gallery.json:</label>
+                        <input 
+                            type="text" 
+                            id="galleryPath" 
+                            placeholder="assets/gallery_metadata.json"
+                            class="input-field"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="imgFolder">Path folder gambar:</label>
+                        <input 
+                            type="text" 
+                            id="imgFolder" 
+                            placeholder="assets/gallery"
+                            class="input-field"
+                        >
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="saveSetting" class="btn btn-primary">💾 Simpan</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <h2>📁 Kelola Gallery</h2>
+                
+                <!-- Search -->
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="🔍 Cari gambar..."
+                        class="input-field"
+                    >
+                </div>
+
+                <!-- Filter Kategori -->
+                <div class="filter-section">
+                    <h3>Filter Kategori</h3>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">Semua</button>
+                        <button class="filter-btn" data-filter="minimalis">Minimalis</button>
+                        <button class="filter-btn" data-filter="klasik">Klasik</button>
+                        <button class="filter-btn" data-filter="blinds">Blinds</button>
+                        <button class="filter-btn" data-filter="wallpaper">Wallpaper</button>
+                        <button class="filter-btn" data-filter="jasa">Jasa</button>
+                    </div>
+                </div>
+
+                <!-- Statistics -->
+                <div class="stats-box">
+                    <div class="stat-item">
+                        <span class="stat-label">Total Gambar</span>
+                        <span class="stat-value" id="totalImages">0</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <h2>📤 Upload Gambar Baru</h2>
+                
+                <div class="upload-form">
+                    <!-- Drag & Drop Area -->
+                    <div class="drag-drop-area" id="dragDropArea">
+                        <div class="drag-drop-content">
+                            <span class="drag-drop-icon">📸</span>
+                            <p class="drag-drop-text">Drag gambar ke sini atau klik untuk memilih</p>
+                            <small>JPG, PNG, WEBP • Max 5MB</small>
+                        </div>
+                        <input 
+                            type="file" 
+                            id="fileInput" 
+                            accept=".jpg,.jpeg,.png,.webp"
+                            style="display: none;"
+                        >
+                    </div>
+
+                    <!-- Image Preview -->
+                    <div id="previewBox" class="preview-box hidden">
+                        <div class="preview-content">
+                            <img id="previewImage" alt="Preview">
+                            <div class="preview-info">
+                                <p><strong id="fileName"></strong></p>
+                                <p><small id="fileSize"></small></p>
+                            </div>
+                            <button type="button" class="btn btn-secondary" id="clearPreview">
+                                ✕ Hapus Gambar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Form Fields -->
+                    <div class="form-fields">
+                        <div class="form-group">
+                            <label for="title">Judul Produk:</label>
+                            <input 
+                                type="text" 
+                                id="title" 
+                                placeholder="Contoh: Gorden Minimalis Abu Abu"
+                                class="input-field"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">Kategori:</label>
+                            <select id="category" class="input-field">
+                                <option value="">-- Pilih Kategori --</option>
+                                <option value="minimalis">Minimalis</option>
+                                <option value="klasik">Klasik</option>
+                                <option value="blinds">Blinds</option>
+                                <option value="wallpaper">Wallpaper</option>
+                                <option value="jasa">Jasa</option>
+                            </select>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div id="progressBox" class="progress-box hidden">
+                            <p id="progressText">Uploading...</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                        </div>
+
+                        <!-- Upload Button -->
+                        <button id="uploadBtn" class="btn btn-primary btn-block">
+                            🚀 Upload
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gallery List Section -->
+            <section class="gallery-section">
+                <h2>🖼️ Daftar Gambar</h2>
+                
+                <div id="galleryList" class="gallery-grid">
+                    <div class="loading">Memuat data...</div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
+        <p id="loadingText">Memproses...</p>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Item Gallery</h2>
+                <button class="modal-close" id="closeEdit">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="editTitle">Judul:</label>
+                    <input 
+                        type="text" 
+                        id="editTitle" 
+                        class="input-field"
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="editCategory">Kategori:</label>
+                    <select id="editCategory" class="input-field">
+                        <option value="minimalis">Minimalis</option>
+                        <option value="klasik">Klasik</option>
+                        <option value="blinds">Blinds</option>
+                        <option value="wallpaper">Wallpaper</option>
+                        <option value="jasa">Jasa</option>
+                    </select>
+                </div>
+                <div class="preview-box-edit">
+                    <img id="editPreviewImage" alt="Preview">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelEdit" class="btn btn-secondary">Batal</button>
+                <button id="saveEdit" class="btn btn-primary">💾 Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Delete Modal -->
+    <div id="deleteModal" class="modal hidden">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2>Konfirmasi Hapus</h2>
+                <button class="modal-close" id="closeDelete">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Yakin ingin menghapus item ini?</p>
+                <p id="deleteItemName" style="font-weight: bold;"></p>
+                <small style="color: #ff6b6b;">Tindakan ini tidak dapat dibatalkan.</small>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelDelete" class="btn btn-secondary">Batal</button>
+                <button id="confirmDelete" class="btn btn-danger">🗑️ Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
