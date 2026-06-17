@@ -100,14 +100,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function updateSlider() {
-            sliderTrack.style.transform = `translateX(-${currentIndex * 25}%)`;
+            sliderTrack.style.transform = `translateX(-${currentIndex * 100}%)`;
 
             dots.forEach((dot, index) => {
                 dot.classList.toggle('active', index === currentIndex);
             });
 
             if (prevBtn) prevBtn.disabled = currentIndex === 0;
-            if (nextBtn) nextBtn.disabled = currentIndex === slides.length - 4;
+            if (nextBtn) nextBtn.disabled = currentIndex === slides.length - 1;
         }
 
         function goToSlide(index) {
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function nextSlide() {
-            if (currentIndex < slides.length - 4) {
+            if (currentIndex < slides.length - 1) {
                 currentIndex++;
                 updateSlider();
             }
@@ -203,5 +203,90 @@ document.addEventListener('DOMContentLoaded', () => {
         // Initialize
         updateSlider();
     }
+
+    // --- Gallery "Show All" Toggle ---
+    const viewAllBtn = document.getElementById('view-all-gallery');
+    const galleryGrid = document.querySelector('.gallery-grid');
+    const gallerySlider = document.querySelector('.gallery-slider');
+
+    if (viewAllBtn && galleryGrid) {
+        viewAllBtn.addEventListener('click', () => {
+            const gridHidden = galleryGrid.classList.contains('hide');
+            if (gridHidden) {
+                galleryGrid.classList.remove('hide');
+                viewAllBtn.textContent = 'Sembunyikan Gambar';
+                galleryGrid.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                galleryGrid.classList.add('hide');
+                viewAllBtn.textContent = 'Tampilkan Semua Gambar';
+                if (gallerySlider) gallerySlider.classList.remove('hidden');
+                document.getElementById('galeri').scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
+
+    // --- Gallery category filter ---
+    const filterButtons = document.querySelectorAll('.gallery-filter');
+    const gridItems = document.querySelectorAll('.gallery-grid .gallery-item');
+    const sliderSlides = document.querySelectorAll('.gallery-slide');
+
+    function applyGalleryFilter(category) {
+        gridItems.forEach(item => {
+            const itemCategory = item.dataset.category || 'all';
+            if (category === 'all' || itemCategory === category) {
+                item.classList.remove('show-hidden');
+            } else {
+                item.classList.add('show-hidden');
+            }
+        });
+    }
+
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const category = btn.dataset.filter;
+            applyGalleryFilter(category);
+
+            if (gallerySlider) {
+                if (category === 'all') {
+                    gallerySlider.classList.remove('hidden');
+                } else {
+                    gallerySlider.classList.add('hidden');
+                }
+            }
+
+            if (galleryGrid) {
+                if (category === 'all') {
+                    galleryGrid.classList.add('hide');
+                    if (viewAllBtn) {
+                        viewAllBtn.textContent = 'Tampilkan Semua Gambar';
+                        viewAllBtn.style.display = 'inline-block';
+                    }
+                } else {
+                    galleryGrid.classList.remove('hide');
+                    if (viewAllBtn) {
+                        viewAllBtn.textContent = 'Sembunyikan Gambar';
+                        viewAllBtn.style.display = 'inline-block';
+                    }
+                }
+            }
+        });
+    });
+
+    // Default: start with slider visible and grid hidden until action
+    if (galleryGrid) {
+        galleryGrid.classList.add('hide');
+    }
+    if (gallerySlider) {
+        gallerySlider.classList.remove('hidden');
+    }
+    if (viewAllBtn) {
+        viewAllBtn.style.display = 'inline-block';
+        viewAllBtn.textContent = 'Tampilkan Semua Gambar';
+    }
+
+    applyGalleryFilter('all');
 
 });

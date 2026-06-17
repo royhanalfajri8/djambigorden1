@@ -365,7 +365,7 @@ img {
 }
 
 .gallery-slide {
-    min-width: 25%;
+    min-width: 100%;
     position: relative;
 }
 
