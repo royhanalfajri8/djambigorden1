@@ -110,48 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (nextBtn) nextBtn.disabled = currentIndex === slides.length - 1;
         }
 
-        // --- Dynamic gallery loader from assets/gallery_metadata.json ---
-        async function loadGalleryFromMetadata() {
-            try {
-                const resp = await fetch('assets/gallery_metadata.json', { cache: 'no-store' });
-                if (!resp.ok) return; // keep static markup as fallback
-                const data = await resp.json();
-                let items = [];
-                if (Array.isArray(data)) {
-                    items = data; // expect {img, title, tag}
-                } else if (data && typeof data === 'object') {
-                    items = Object.keys(data).map(key => {
-                        const v = data[key] || {};
-                        const imgPath = key.includes('/') ? key : `assets/gallery/${key}`;
-                        const img = encodeURI(imgPath);
-                        return { img, title: v.alt || key, tag: v.category || '' };
-                    });
-                }
-
-                if (items.length === 0) return;
-
-                // Clear existing slides
-                sliderTrack.innerHTML = '';
-                items.forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = 'gallery-slide';
-                    if (item.tag) div.setAttribute('data-category', item.tag);
-                    const img = document.createElement('img');
-                    img.src = item.img;
-                    img.alt = item.title || '';
-                    div.appendChild(img);
-                    sliderTrack.appendChild(div);
-                });
-
-                slides = Array.from(sliderTrack.querySelectorAll('.gallery-slide'));
-                currentIndex = 0;
-                initDots();
-                updateSlider();
-            } catch (err) {
-                console.warn('Failed to load gallery metadata', err);
-            }
-        }
-
         function goToSlide(index) {
             currentIndex = Math.min(Math.max(index, 0), slides.length - 1);
             updateSlider();
@@ -175,9 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
             initDots();
             updateSlider();
         }
-
-        // load gallery metadata if available
-        loadGalleryFromMetadata();
 
         // Event listeners for buttons
         nextBtn.addEventListener('click', nextSlide);
@@ -248,89 +203,5 @@ document.addEventListener('DOMContentLoaded', () => {
         // Initialize
         updateSlider();
     }
-
-    // --- Gallery "Show All" Toggle ---
-    const viewAllBtn = document.getElementById('view-all-gallery');
-    const galleryGrid = document.querySelector('.gallery-grid');
-    const gallerySlider = document.querySelector('.gallery-slider');
-
-    if (viewAllBtn && galleryGrid) {
-        viewAllBtn.addEventListener('click', () => {
-            const gridHidden = galleryGrid.classList.contains('hide');
-            if (gridHidden) {
-                galleryGrid.classList.remove('hide');
-                viewAllBtn.textContent = 'Sembunyikan Gambar';
-                galleryGrid.scrollIntoView({ behavior: 'smooth' });
-            } else {
-                galleryGrid.classList.add('hide');
-                viewAllBtn.textContent = 'Tampilkan Semua Gambar';
-                if (gallerySlider) gallerySlider.classList.remove('hidden');
-                document.getElementById('galeri').scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-    }
-
-    // --- Gallery category filter ---
-    const filterButtons = document.querySelectorAll('.gallery-filter');
-    const gridItems = document.querySelectorAll('.gallery-grid .gallery-item');
-
-    function applyGalleryFilter(category) {
-        gridItems.forEach(item => {
-            const itemCategory = item.dataset.category || 'all';
-            if (category === 'all' || itemCategory === category) {
-                item.classList.remove('show-hidden');
-            } else {
-                item.classList.add('show-hidden');
-            }
-        });
-    }
-
-    filterButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            filterButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const category = btn.dataset.filter;
-            applyGalleryFilter(category);
-
-            if (gallerySlider) {
-                if (category === 'all') {
-                    gallerySlider.classList.remove('hidden');
-                } else {
-                    gallerySlider.classList.add('hidden');
-                }
-            }
-
-            if (galleryGrid) {
-                if (category === 'all') {
-                    galleryGrid.classList.add('hide');
-                    if (viewAllBtn) {
-                        viewAllBtn.textContent = 'Tampilkan Semua Gambar';
-                        viewAllBtn.style.display = 'inline-block';
-                    }
-                } else {
-                    galleryGrid.classList.remove('hide');
-                    if (viewAllBtn) {
-                        viewAllBtn.textContent = 'Sembunyikan Gambar';
-                        viewAllBtn.style.display = 'inline-block';
-                    }
-                }
-            }
-        });
-    });
-
-    // Default: start with slider visible and grid hidden until action
-    if (galleryGrid) {
-        galleryGrid.classList.add('hide');
-    }
-    if (gallerySlider) {
-        gallerySlider.classList.remove('hidden');
-    }
-    if (viewAllBtn) {
-        viewAllBtn.style.display = 'inline-block';
-        viewAllBtn.textContent = 'Tampilkan Semua Gambar';
-    }
-
-    applyGalleryFilter('all');
 
 });
