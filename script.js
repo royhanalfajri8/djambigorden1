@@ -100,14 +100,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function updateSlider() {
-            sliderTrack.style.transform = `translateX(-${currentIndex * 100}%)`;
+            sliderTrack.style.transform = `translateX(-${currentIndex * 25}%)`;
 
             dots.forEach((dot, index) => {
                 dot.classList.toggle('active', index === currentIndex);
             });
 
             if (prevBtn) prevBtn.disabled = currentIndex === 0;
-            if (nextBtn) nextBtn.disabled = currentIndex === slides.length - 1;
+            if (nextBtn) nextBtn.disabled = currentIndex === slides.length - 4;
         }
 
         function goToSlide(index) {
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function nextSlide() {
-            if (currentIndex < slides.length - 1) {
+            if (currentIndex < slides.length - 4) {
                 currentIndex++;
                 updateSlider();
             }
